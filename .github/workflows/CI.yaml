@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    paths-ignore: 
+      - '.github/**'
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Execute the Python script create-update-file.py
+        run: python ./create-update-file.py
+
+      - name: List files
+        run: |
+          ls -R
