@@ -2,6 +2,7 @@ print("======================== Create the text file ========================")
 # Create directory if not exists
 import os
 new_dir = "my-test"
+print(os.listdir())
 if os.path.isdir(new_dir) == False:
   try:
       os.makedirs(new_dir)
