@@ -1,12 +1,9 @@
-name: CI
+name: test
 
 on:
   push:
     paths-ignore: 
       - '.github/**'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   test:
@@ -21,10 +18,4 @@ jobs:
       - name: List files
         run: |
           ls -R
-
-      - name: Commit latest build
-        uses: EndBug/add-and-commit@v7
-        with:
-          add: 'my-test'
-
 
