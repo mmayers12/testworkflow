@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
+          ref: {{ github.head_ref }}
       - name: Check modified files
         id: check_files
         run: |
@@ -52,6 +53,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: {{ github.head_ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v2
