@@ -6,6 +6,11 @@ on:
       - main
     paths:
       - 'submit.txt'
+  pull_request_target:
+    branches:
+      - main
+    paths:
+      - 'submit.txt'
 
 jobs:
   check:
@@ -68,9 +73,7 @@ jobs:
 
       - name: Commit latest build
         if: ${{ success() }}
-        uses: EndBug/add-and-commit@v7
-        with:
-          add: '.'
+        uses: stefanzweifel/git-auto-commit-action@v4
 
       - name: Automerge successful build
         if: ${{ success() }}
