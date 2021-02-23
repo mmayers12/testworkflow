@@ -1,4 +1,4 @@
-### NEW COMMENT further updates
+### NEW COMMENT
 def main():
     # Read in submission file
     with open('submit.txt') as fin:
