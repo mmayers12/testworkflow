@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'submit.txt'
 
 jobs:
   deploy:
@@ -36,4 +38,8 @@ jobs:
         with:
           add: '.'
 
+      - name: Automerge successful build
+        if: ${{ success() }}
+        uses: alexwilson/enable-github-automerge-action@main
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
