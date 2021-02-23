@@ -42,7 +42,7 @@ jobs:
   deploy:
     name: Add new items from submit.txt
     needs: check
-    if: needs.chec.outputs.run_job == 'true'
+    if: needs.check.outputs.run_job == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
