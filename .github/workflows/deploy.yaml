@@ -36,4 +36,8 @@ jobs:
         with:
           add: '.'
 
+      - name: Automerge successful build
+        if: ${{ success() }}
+        uses: alexwilson/enable-github-automerge-action@main
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
