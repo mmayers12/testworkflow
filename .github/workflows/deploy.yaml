@@ -8,7 +8,41 @@ on:
       - 'submit.txt'
 
 jobs:
+  check:
+    name: Check files
+    outputs:
+      run_job: ${{ steps.check_files.outputs.run_job }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Check modified files
+        id: check_files
+        run: |
+          echo "========================== list modified files =========================="
+          git diff --name-only HEAD^ HEAD
+
+          echo "===================== check paths of modified files ====================="
+          git diff --name-only HEAD^ HEAD > files.txt
+          while IFS= read -r file
+          do
+            echo $file
+            if [[ $file != 'submit.txt' ]]; then
+              echo "Modifications to this file is not allowed for auto-merge"
+              echo "::set-output name=run_job::false"
+              exit 125
+              break
+            else
+              echo "::set-output name=run_job::true"
+            fi
+          done < files.txt
+
   deploy:
+    name: Add new items from submit.txt
+    needs: check
+    if: needs.check.outputs.run_job == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
