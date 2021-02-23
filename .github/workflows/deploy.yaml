@@ -1,11 +1,11 @@
 name: deploy
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'submit.txt'
+  #pull_request:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - 'submit.txt'
   pull_request_target:
     branches:
       - main
@@ -74,6 +74,8 @@ jobs:
       - name: Commit latest build
         if: ${{ success() }}
         uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          push_options: '--force'
 
       - name: Automerge successful build
         if: ${{ success() }}
