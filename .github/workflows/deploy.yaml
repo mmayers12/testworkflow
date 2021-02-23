@@ -1,11 +1,11 @@
 name: deploy
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'submit.txt'
+  #pull_request:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - 'submit.txt'
   pull_request_target:
     branches:
       - main
@@ -47,7 +47,7 @@ jobs:
 
   deploy:
     name: Add new items from submit.txt
-    needs: check
+    #needs: check
     #if: needs.check.outputs.run_job == 'true'
     runs-on: ubuntu-latest
     steps:
