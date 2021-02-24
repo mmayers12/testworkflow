@@ -1,3 +1,4 @@
+## Adding a comment to test sync
 def main():
     # Read in submission file
     with open('submit.txt') as fin:
