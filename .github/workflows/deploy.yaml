@@ -1,16 +1,16 @@
 name: deploy
 
 on:
-  #pull_request:
-  #  branches:
-  #    - main
-  #  paths:
-  #    - 'submit.txt'
-  pull_request_target:
+  pull_request:
     branches:
       - main
     paths:
       - 'submit.txt'
+  #pull_request_target:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - 'submit.txt'
 
 jobs:
   #check:
@@ -80,9 +80,9 @@ jobs:
         with:
           push_options: '--force'
 
-      - name: Automerge successful build
-        if: ${{ success() }}
-        uses: alexwilson/enable-github-automerge-action@main
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      #- name: Automerge successful build
+      #  if: ${{ success() }}
+      #  uses: alexwilson/enable-github-automerge-action@main
+      #  with:
+      #    github-token: "${{ secrets.GITHUB_TOKEN }}"
 
