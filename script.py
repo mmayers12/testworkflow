@@ -1,4 +1,6 @@
 ## Adding a comment to test sync
+## Here's a new line to test sync again
+## Final retest of sync
 def main():
     # Read in submission file
     with open('submit.txt') as fin:
