@@ -1,16 +1,16 @@
 name: deploy
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'submit.txt'
-  #pull_request_target:
+  #pull_request:
   #  branches:
   #    - main
   #  paths:
   #    - 'submit.txt'
+  pull_request_target:
+    branches:
+      - main
+    paths:
+      - 'submit.txt'
 
 jobs:
   #check:
