@@ -51,37 +51,42 @@ jobs:
     #if: needs.check.outputs.run_job == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: test break
+        run: |
+          echo 'trying to break this action'
+          exit 1
+      
+      #- name: Checkout
+      #  uses: actions/checkout@v2
       #  with:
       #    ref: ${{ github.head_ref }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+#      - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.8
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install pytest
+#           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: build new base.txt
-        run: python ./script.py
+#       - name: build new base.txt
+#         run: python ./script.py
 
-      - name: test new build with pytest
-        if: ${{ success() }}
-        run: |
-          pytest test.py
+#       - name: test new build with pytest
+#         if: ${{ success() }}
+#         run: |
+#           pytest test.py
 
-      - name: Save data from upate
-        run: |
-          mkdir -p ./pr
-          cat base.txt > ./pr/NR
-      - uses: actions/upload-artifact@v2
-        with:
-          name: pr
-          path: pr/
+#       - name: Save data from upate
+#         run: |
+#           mkdir -p ./pr
+#           cat base.txt > ./pr/NR
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: pr
+#           path: pr/
 
 
       #- name: Commit latest build
