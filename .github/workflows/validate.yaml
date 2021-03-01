@@ -61,25 +61,25 @@ jobs:
             echo "Unauthorized Submission: Pull requests must only contain edits to 'submit.txt'"
             exit 125
           fi
-      
+
       - name: Checkout Base
         uses: actions/checkout@v2
-        
+
       - name: Checkout PR
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: pr
-        
+
       - name: Configure new submission
         run: |
           mv pr/submit.txt submit.txt
-        
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -87,9 +87,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: build new base.txt
-        run: |
-          mv new_submit.txt submit.txt
-          python ./script.py
+        run: python ./script.py
 
       - name: test new build with pytest
         if: ${{ success() }}
@@ -101,6 +99,12 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           add: 'base.txt'
+
+      #- name: Automerge successful build
+      #  if: ${{ success() }}
+      #  uses: alexwilson/enable-github-automerge-action@main
+      #  with:
+      #    github-token: "${{ secrets.GITHUB_TOKEN }}"
 
 #       - name: Save data from upate
 #         run: |
@@ -119,9 +123,4 @@ jobs:
       #  with:
       #    push_options: '--force'
 
-      #- name: Automerge successful build
-      #  if: ${{ success() }}
-      #  uses: alexwilson/enable-github-automerge-action@main
-      #  with:
-      #    github-token: "${{ secrets.GITHUB_TOKEN }}"
 
