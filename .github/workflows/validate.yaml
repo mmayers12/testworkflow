@@ -87,9 +87,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: build new base.txt
-        run: |
-          mv new_submit.txt submit.txt
-          python ./script.py
+        run: python ./script.py
 
       - name: test new build with pytest
         if: ${{ success() }}
