@@ -51,14 +51,41 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Display structure of downloaded files
-        run: ls -R
 
 
+      - name: Run script on update
+        run: |
+          mv NR submit.txt
+          rm pr.zip
+          python ./script.py
+
+      - name: test new build with pytest
+        if: ${{ success() }}
+        run: |
+          pytest test.py
+
+      - name: Commit latest build
+        if: ${{ success() }}
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: '.'
 
 
-
+      - name: Automerge successful build
+        if: ${{ success() }}
+        uses: alexwilson/enable-github-automerge-action@main
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
     #steps:
     #  - name: Checkout
