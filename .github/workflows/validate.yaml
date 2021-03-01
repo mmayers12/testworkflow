@@ -1,4 +1,4 @@
-name: deploy
+name: Validate PR
 
 on:
   pull_request:
@@ -45,7 +45,7 @@ jobs:
   #          fi
   #        done < files.txt
 
-  deploy:
+  validate:
     name: Add new items from submit.txt
     #needs: check
     #if: needs.check.outputs.run_job == 'true'
@@ -74,12 +74,22 @@ jobs:
         run: |
           pytest test.py
 
-      - name: Commit latest build
-        if: ${{ success() }}
-        uses: EndBug/add-and-commit@v7
+      - name: Save data from upate
+        run: |
+          mkdir -p ./pr
+          cat base.txt > ./pr/NR
+      - uses: actions/upload-artifact@v2
         with:
-          add: '.'
-          push: origin main
+          name: pr
+          path: pr/
+
+
+      #- name: Commit latest build
+      #  if: ${{ success() }}
+      #  uses: EndBug/add-and-commit@v7
+      #  with:
+      #    add: '.'
+      #    push: origin main
       #- name: Commit latest build
       #  if: ${{ success() }}
       #  uses: stefanzweifel/git-auto-commit-action@v4
