@@ -6,11 +6,11 @@ on:
   #    - main
   #  paths:
   #    - 'submit.txt'
-  #pull_request_target:
-  #  branches:
-  #    - main
-  #  paths:
-  #    - 'submit.txt'
+  pull_request_target:
+    branches:
+      - main
+    paths:
+      - 'submit.txt'
 
 jobs:
   #check:
@@ -46,7 +46,7 @@ jobs:
   #        done < files.txt
 
   validate:
-    name: Add new items from submit.txt
+    name: Check that only valid files are part of PR
     #needs: check
     #if: needs.check.outputs.run_job == 'true'
     runs-on: ubuntu-latest
