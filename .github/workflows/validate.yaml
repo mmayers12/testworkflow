@@ -98,13 +98,13 @@ jobs:
         if: ${{ success() }}
         uses: EndBug/add-and-commit@v7
         with:
-          add: "['base.txt', 'submit.txt']"
-            
-      - name: Automerge successful build
-        if: ${{ success() }}
-        uses: alexwilson/enable-github-automerge-action@main
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          add: 'base.txt'
+
+      #- name: Automerge successful build
+      #  if: ${{ success() }}
+      #  uses: alexwilson/enable-github-automerge-action@main
+      #  with:
+      #    github-token: "${{ secrets.GITHUB_TOKEN }}"
 
 #       - name: Save data from upate
 #         run: |
