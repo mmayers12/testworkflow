@@ -90,10 +90,10 @@ jobs:
           mv new_submit.txt submit.txt
           python ./script.py
 
-#       - name: test new build with pytest
-#         if: ${{ success() }}
-#         run: |
-#           pytest test.py
+      - name: test new build with pytest
+        if: ${{ success() }}
+        run: |
+          pytest test.py
 
 
       - name: Commit latest build
