@@ -12,53 +12,25 @@ on:
   #    - 'submit.txt'
 
 jobs:
-  #check:
-  #  name: Check files
-  #  outputs:
-  #    run_job: ${{ steps.check_files.outputs.run_job }}
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Checkout code
-  #      uses: actions/checkout@v2
-  #      with:
-  #        fetch-depth: 2
-  #        ref: ${{ github.head_ref }}
-  #    - name: Check modified files
-  #      id: check_files
-  #      run: |
-  #        echo "========================== list modified files =========================="
-  #        git diff --name-only HEAD^ HEAD
-
-  #        echo "===================== check paths of modified files ====================="
-  #        git diff --name-only HEAD^ HEAD > files.txt
-  #        while IFS= read -r file
-  #        do
-  #          echo $file
-  #          if [[ $file != 'submit.txt' ]]; then
-  #            echo "Modifications to this file is not allowed for auto-merge"
-  #            echo "::set-output name=run_job::false"
-  #            exit 125
-  #            break
-  #          else
-  #            echo "::set-output name=run_job::true"
-  #          fi
-  #        done < files.txt
-
   deploy:
     name: Add new items from submit.txt
     #needs: check
     #if: needs.check.outputs.run_job == 'true'
+    if: >
+      ${{ github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' }}
+    
     runs-on: ubuntu-latest
-   steps:
-     - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-     - uses: actions/download-artifact@v2
-         with:
-         name: pr
-         path: pr
+      - uses: actions/download-artifact@v2
+        with:
+          name: pr
+          path: pr
 
-     - name: Display structure of downloaded files
-         run: ls -R
+      - name: Display structure of downloaded files
+        run: ls -R
 
 
 
@@ -99,11 +71,11 @@ jobs:
     #      path: pr/
 
 
-      #- name: Commit latest build
-      #  if: ${{ success() }}
-      #  uses: EndBug/add-and-commit@v7
-      #  with:
-      #    add: '.'
+    #- name: Commit latest build
+    #  if: ${{ success() }}
+    #  uses: EndBug/add-and-commit@v7
+    #  with:
+    #    add: '.'
       #    push: origin main
       #- name: Commit latest build
       #  if: ${{ success() }}
