@@ -51,7 +51,7 @@ jobs:
     #if: needs.check.outputs.run_job == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: list files
+      - name: Check PR File List
         run: |
           URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
           FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
@@ -62,17 +62,18 @@ jobs:
             exit 125
           fi
       
+      - name: Checkout Base
+        uses: actions/checkout@v2
+        
       - name: Checkout PR
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          path: pr
         
-      - name: Save new submission
+      - name: Configure new submission
         run: |
-          mv submit.txt new_submit.txt
-          
-      - name: Checkout Base
-        uses: actions/checkout@v2
+          mv pr/submit.txt submit.txt
         
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -95,12 +96,11 @@ jobs:
         run: |
           pytest test.py
 
-
       - name: Commit latest build
         if: ${{ success() }}
         uses: EndBug/add-and-commit@v7
         with:
-          add: '.'
+          add: 'base.txt'
 
 #       - name: Save data from upate
 #         run: |
