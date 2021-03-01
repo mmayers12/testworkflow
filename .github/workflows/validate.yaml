@@ -100,11 +100,11 @@ jobs:
         with:
           add: 'base.txt'
 
-      #- name: Automerge successful build
-      #  if: ${{ success() }}
-      #  uses: alexwilson/enable-github-automerge-action@main
-      #  with:
-      #    github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Automerge successful build
+        if: ${{ success() }}
+        uses: alexwilson/enable-github-automerge-action@main
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
 #       - name: Save data from upate
 #         run: |
