@@ -1,3 +1,4 @@
+import sys
 ## Adding a comment to test sync
 ## Here's a new line to test sync again
 ## Final retest of sync
@@ -21,6 +22,7 @@ def main():
             pass
     except:
         print('Error with submission')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
